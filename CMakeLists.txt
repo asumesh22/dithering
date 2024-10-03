@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( dithering_step01 )
+find_package( OpenCV REQUIRED )
+message("OpenCV version: ${OpenCV_VERSION}")
+add_executable( dithering_step01 dithering_step01.cpp )
+target_link_libraries( dithering_step01 ${OpenCV_LIBS} )

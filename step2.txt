@@ -1,0 +1,34 @@
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <time.h>
+#include <iostream>
+using namespace std ;
+using namespace cv  ;
+int main( int argc , char* argv[] ) {
+    Mat png = imread("yoda.png");
+    Mat img(png.rows, png.cols, CV_8UC3, Scalar(255,255,255));
+    
+    RNG rng(1617620);
+    
+    for (int row = 0; row < png.rows; row++) {
+        for(int col = 0; col < png.cols; col++) {
+            int val = (int) (png.at<uchar>(row, col));
+            
+            unsigned int x = rng.next();
+            int limit = x * 255.0 / UINT_MAX;;
+            
+            if(val < limit) {
+                val = 0;
+            } else {
+                val = 255;
+            }
+            
+            img.at<Vec3b>(row, col) = {val, val, val};
+        }
+    }
+            
+    imwrite("dithered.png", img);
+    return 0;
+}
